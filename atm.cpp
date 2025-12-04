@@ -32,3 +32,70 @@ void tampilRiwayat() {
         cout << i + 1 << ". " << riwayat[i] << endl;
     }
 }
+
+// ===================
+// CEK SALDO
+// ===================
+void cekSaldo() {
+    cout << "Saldo anda: Rp " << saldo << endl;
+}
+
+
+// ===================
+// TARIK TUNAI
+// ===================
+void tarikTunai() {
+    int jumlah;
+    cout << "Jumlah tarik: ";
+    cin >> jumlah;
+
+    if (jumlah > 0 && jumlah <= saldo && jumlah >= 20000) {
+        saldo -= jumlah;
+        tambahRiwayat("Tarik " + to_string(jumlah));
+        cout << "Penarikan berhasil.\n";
+    } else {
+        cout << "Penarikan GAGAL.\n";
+    }
+}
+
+
+// ===================
+// SETOR TUNAI
+// ===================
+void setorTunai() {
+    int jumlah;
+    cout << "Jumlah setor: ";
+    cin >> jumlah;
+
+    if (jumlah > 0 && jumlah % 10000 == 0) {
+        saldo += jumlah;
+        tambahRiwayat("Setor " + to_string(jumlah));
+        cout << "Setoran berhasil.\n";
+    } else {
+        cout << "Setoran GAGAL.\n";
+    }
+}
+
+
+// ===================
+// TRANSFER
+// ===================
+void transferUang() {
+    int tujuan, jumlah;
+
+    cout << "Transfer ke rekening: ";
+    cin >> tujuan;
+
+    cout << "Jumlah transfer: ";
+    cin >> jumlah;
+
+    if (jumlah > 0 && jumlah <= saldo) {
+        saldo -= jumlah;
+        tambahRiwayat(
+            "Transfer " + to_string(jumlah) + " ke " + to_string(tujuan)
+        );
+        cout << "Transfer BERHASIL\n";
+    } else {
+        cout << "Transfer GAGAL\n";
+    }
+}
