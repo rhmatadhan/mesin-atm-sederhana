@@ -80,7 +80,7 @@ void setorTunai() {
 // ===================
 // TRANSFER
 // ===================
-void transferUang() {
+void transfer() {
     int tujuan, jumlah;
 
     cout << "Transfer ke rekening: ";
@@ -98,4 +98,70 @@ void transferUang() {
     } else {
         cout << "Transfer GAGAL\n";
     }
+}
+
+// ===================
+// Login
+// ===================
+bool login() {
+    int pinBenar = 1234;
+    int pinInput;
+    int kesempatan = 3;
+
+    while (kesempatan > 0) {
+        cout << "\n===== LOGIN ATM =====\n";
+        cout << "Masukkan PIN: ";
+        cin >> pinInput;
+
+        if (pinInput == pinBenar) {
+            cout << "Login berhasil!\n";
+            return true;
+        } else {
+            kesempatan--;
+            cout << "PIN salah! Sisa kesempatan: " << kesempatan << endl;
+        }
+    }
+
+    cout << "Akun terblokir!\n";
+    return false;
+}
+
+
+// ===================
+// Menu Utama
+// ===================
+void menuUtama() {
+    int pilihan;
+
+    do {
+        cout << "\n===== MENU UTAMA =====\n";
+        cout << "1. Cek Saldo\n";
+        cout << "2. Setor Tunai\n";
+        cout << "3. Tarik Tunai\n";
+        cout << "4. Transfer\n";
+        cout << "5. Riwayat Transaksi\n";
+        cout << "6. Keluar\n";
+        cout << "Pilih menu: ";
+        cin >> pilihan;
+
+        switch (pilihan) {
+            case 1: cekSaldo(); break;
+            case 2: setorTunai(); break;
+            case 3: tarikTunai(); break;
+            case 4: transfer(); break;
+            case 5: tampilRiwayat(); break;
+            case 6: cout << "Terima kasih!\n"; break;
+            default: cout << "Pilihan tidak valid!\n";
+        }
+
+    } while (pilihan != 6);
+}
+
+
+// ===================
+// MAIN PROGRAM
+// ===================
+int main() {
+    if (login()) menuUtama();
+    return 0;
 }
