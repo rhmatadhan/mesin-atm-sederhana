@@ -37,6 +37,7 @@ void tampilRiwayat() {
 // CEK SALDO
 // ===================
 void cekSaldo() {
+    cout << "\n===== CEK SALDO =====\n";
     cout << "Saldo anda: Rp " << saldo << endl;
 }
 
@@ -46,16 +47,30 @@ void cekSaldo() {
 // ===================
 void tarikTunai() {
     int jumlah;
-    cout << "Jumlah tarik: ";
+    cout << "\n===== TARIK TUNAI =====\n";
+    cout << "Masukkan jumlah tarik: ";
     cin >> jumlah;
 
-    if (jumlah > 0 && jumlah <= saldo && jumlah >= 20000) {
-        saldo -= jumlah;
-        tambahRiwayat("Tarik " + to_string(jumlah));
-        cout << "Penarikan berhasil.\n";
-    } else {
-        cout << "Penarikan GAGAL.\n";
+    if (jumlah <= 0) {
+        cout << "Jumlah tidak valid!\n";
+        return;
     }
+
+    if (jumlah > saldo) {
+        cout << "Saldo tidak cukup!\n";
+        return;
+    }
+
+    if (jumlah < 20000) {
+        cout << "Minimal tarik 20.000!\n";
+        return;
+    }
+
+    saldo -= jumlah;
+    tambahRiwayat("Tarik Rp " + to_string(jumlah));
+
+    cout << "Berhasil tarik!\n";
+    cout << "Saldo baru: Rp " << saldo << endl;
 }
 
 
@@ -64,16 +79,25 @@ void tarikTunai() {
 // ===================
 void setorTunai() {
     int jumlah;
-    cout << "Jumlah setor: ";
+    cout << "\n===== SETOR TUNAI =====\n";
+    cout << "Masukkan jumlah setor: ";
     cin >> jumlah;
 
-    if (jumlah > 0 && jumlah % 10000 == 0) {
-        saldo += jumlah;
-        tambahRiwayat("Setor " + to_string(jumlah));
-        cout << "Setoran berhasil.\n";
-    } else {
-        cout << "Setoran GAGAL.\n";
+    if (jumlah <= 0) {
+        cout << "Jumlah tidak valid!\n";
+        return;
     }
+
+    if (jumlah % 10000 != 0) {
+        cout << "Harus kelipatan 10.000!\n";
+        return;
+    }
+
+    saldo += jumlah;
+    tambahRiwayat("Setor Rp " + to_string(jumlah));
+
+    cout << "Berhasil setor!\n";
+    cout << "Saldo baru: Rp " << saldo << endl;
 }
 
 
@@ -81,23 +105,36 @@ void setorTunai() {
 // TRANSFER
 // ===================
 void transfer() {
-    int tujuan, jumlah;
+    int rekeningTujuan[3] = {111, 222, 333};
+    int rekInput, jumlah;
 
-    cout << "Transfer ke rekening: ";
-    cin >> tujuan;
+    cout << "\n===== TRANSFER =====\n";
+    cout << "Masukkan nomor rekening: ";
+    cin >> rekInput;
 
-    cout << "Jumlah transfer: ";
+    bool ditemukan = false;
+    for (int i = 0; i < 3; i++) {
+        if (rekInput == rekeningTujuan[i]) ditemukan = true;
+    }
+
+    if (!ditemukan) {
+        cout << "Rekening tidak ditemukan!\n";
+        return;
+    }
+
+    cout << "Masukkan jumlah transfer: ";
     cin >> jumlah;
 
-    if (jumlah > 0 && jumlah <= saldo) {
-        saldo -= jumlah;
-        tambahRiwayat(
-            "Transfer " + to_string(jumlah) + " ke " + to_string(tujuan)
-        );
-        cout << "Transfer BERHASIL\n";
-    } else {
-        cout << "Transfer GAGAL\n";
+    if (jumlah <= 0 || jumlah > saldo) {
+        cout << "Jumlah tidak valid atau saldo kurang!\n";
+        return;
     }
+
+    saldo -= jumlah;
+    tambahRiwayat("Transfer Rp " + to_string(jumlah) + " ke " + to_string(rekInput));
+
+    cout << "Transfer berhasil!\n";
+    cout << "Saldo baru: Rp " << saldo << endl;
 }
 
 // ===================
